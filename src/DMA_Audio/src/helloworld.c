@@ -655,6 +655,12 @@ void play_wav(Demo *p_demo_inst,u8 *file) {
 	ptr += 8;
 	u16 *wav_data = (u16*)ptr;
 
+	if(*file == 0)
+		{
+			xil_printf("Must receive a WAV file to be able to play\r\n");
+			p_demo_inst->mode = DEMO_MODE_PAUSED;
+			return;
+		}
 	// create dma buffer, downscale audio depth to 8bit.
 	u32 dma_data_length = buf2u32(p_data->data_chunk_size) * sizeof(u8) / sizeof(u16);
 	dma_data = (u8*)malloc(dma_data_length);
@@ -696,6 +702,7 @@ void recv_wav (Demo *p_demo_inst,u8 *file) {
 	if ( file == NULL)
 	{
 		xil_printf("ERROR: Memory fault");
+		p_demo_inst->mode = DEMO_MODE_PAUSED;
 		return;
 	}
 
@@ -754,6 +761,7 @@ int main() {
 	Demo device;
 	XStatus status;
 	file = malloc(max_file_size); // this will take most of the heap haha
+	memset(file,0,max_file_size);
 
 #ifdef __MICROBLAZE__
 #ifdef XPAR_MICROBLAZE_0_USE_ICACHE
