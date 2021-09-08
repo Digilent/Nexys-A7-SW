@@ -695,6 +695,8 @@ void recv_wav(Demo *p_demo_inst) {
 	if(file == NULL)
 	{
 		xil_printf("Memory fault");
+		p_demo_inst->mode = DEMO_MODE_PAUSED;
+		return;
 	}
 	XUartLite_ResetFifos(&(p_demo_inst->uart_inst)); //flushing the FIFO before each UART transmission is important,
 													//in order to avoid unwanted data on buffer
