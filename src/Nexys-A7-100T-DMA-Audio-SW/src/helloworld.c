@@ -384,7 +384,7 @@ void dma_forward(Demo *p_demo_inst) {
 	static const u32 BUFFER_SIZE_WORDS = 256;
 	static const u32 BUFFER_SIZE_BYTES = 1024; //BUFFER_SIZE_WORDS * sizeof(u32));
 	xil_printf("entered dma_forward\r\n");
-	u8 *buffer = malloc(BUFFER_SIZE_BYTES);
+	u8 *buffer = (u8*)malloc(BUFFER_SIZE_BYTES);
 	memset(buffer, 0, BUFFER_SIZE_BYTES);
 	xil_printf("  1.\r\n");
 
@@ -753,7 +753,7 @@ void recv_wav(Demo *p_demo_inst,u8* file) {
 int main() {
 	Demo device;
 	XStatus status;
-	file = malloc(max_file_size); // this will take most of the heap haha
+	file = (u8*)malloc(max_file_size); // this will take most of the heap haha
 	memset(file,0,max_file_size);
 
 #ifdef __MICROBLAZE__
