@@ -632,8 +632,7 @@ u16 buf2u16(u8 buffer[2]) {
  * @param	p_dma_inst is a pointer to the device instance to be
  *		worked on.
  *
- * @param ptr is a pointer of type Wav_DataRaw that points to the header of data in order to have a start address for
- * 					interpeting the data
+ * @param   file is a pointer to the Wav data stored in the main memory
  *
  *	Size of data is downscaled to support a 8bit audio depth
  *	After storing the data in an dynamically allocated array it is send to DMA.
@@ -689,6 +688,7 @@ void play_wav(Demo *p_demo_inst,u8 *file) {
  * @param	p_dma_inst is a pointer to the device instance to be
  *		worked on.
  *
+ * @param	file is a pointer to the Wav data stored in the main memory
  *
  *	UART FIFO's are reset in order to prevent FIFO overrun error and avoid having corrupted data.
  *	Data received on UART is interpreted using the data structures defined for the Wav File Header.
