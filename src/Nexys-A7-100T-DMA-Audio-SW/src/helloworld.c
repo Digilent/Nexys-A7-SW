@@ -624,8 +624,7 @@ u16 buf2u16(u8 buffer[2]) {
  * @param	p_dma_inst is a pointer to the device instance to be
  *		worked on.
  *
- * @param ptr is a pointer of type Wav_DataRaw that points to the header of data in order to have a start address for
- * 					interpeting the data
+ * @param	file is a pointer to the Wav data stored in the main memory
  *
  *	Size of data is downscaled to support a 8bit audio depth
  *	After stroing the data in an dynamically allocated array it is send to DMA.
@@ -679,6 +678,7 @@ void play_wav(Demo *p_demo_inst, u8* file ) {
  * @param	p_dma_inst is a pointer to the device instance to be
  *		worked on.
  *
+ * @param	file is a pointer to the Wav data stored in the main memory
  *
  *	UART FIFO's are reset in order to prevent FIFO overrun error and avoid having corrupted data.
  *	Data received on UART is interpreted using the data structures defined for the Wav File Header.
@@ -687,7 +687,7 @@ void play_wav(Demo *p_demo_inst, u8* file ) {
  *
  *
  *****************************************************************************/
-void recv_wav(Demo *p_demo_inst) {
+void recv_wav(Demo *p_demo_inst,u8* file) {
 
 	u8  str[5];
 
@@ -791,7 +791,7 @@ int main() {
 		switch (device.mode) {
 		case DEMO_MODE_PAUSED:         break;
 		case DEMO_MODE_HW_TONE_GEN:   break;//dma_forward(&device); break; // not implemented
-		case DEMO_MODE_RECV_WAV_FILE:  recv_wav(&device);  break;
+		case DEMO_MODE_RECV_WAV_FILE:  recv_wav(&device,file);  break;
 		case DEMO_MODE_PLAY_WAV_FILE: play_wav(&device,file); break;
 		case DEMO_MODE_SW_TONE_GEN:   dma_sw_tone_gen(&device); break;
 		}
